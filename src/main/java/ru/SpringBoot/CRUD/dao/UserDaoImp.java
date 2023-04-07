@@ -28,9 +28,6 @@ public class UserDaoImp implements UserDao {
 
     @Override
     public void delete(long id) {
-        if (entityManager.find(User.class, id) == null) {
-            throw new NullPointerException("Пользователь c id: " + id + " не найден");
-        }
         entityManager.remove(entityManager.find(User.class, id));
     }
 

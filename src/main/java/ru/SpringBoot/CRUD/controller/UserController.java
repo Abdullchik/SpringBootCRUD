@@ -50,14 +50,8 @@ public class UserController {
     }
 
     @DeleteMapping("/deleteUser")
-    public String deleteUser(Model model, Long id) {
-        try {
-            userService.delete(id);
-        } catch (NullPointerException e) {
-            model.addAttribute("message", "Пользователь не найден");
-            e.printStackTrace();
-            return "deleteUserPage";
-        }
+    public String deleteUser(Long id) {
+        userService.delete(id);
         return "redirect:/main";
     }
 }

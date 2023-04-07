@@ -31,7 +31,11 @@ public class UserServiceImp implements UserService {
     @Transactional
     @Override
     public void delete(long id) {
-        userDao.delete(id);
+        try {
+            userDao.delete(id);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Введены неверные данные");
+        }
     }
 
     @Transactional(readOnly = true)
