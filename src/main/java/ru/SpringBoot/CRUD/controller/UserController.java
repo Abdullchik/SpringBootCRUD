@@ -21,31 +21,43 @@ public class UserController {
         model.addAttribute("usersList", userService.getUsersList());
         return "main";
     }
+
     @GetMapping("/addUserPage")
     public String addUserPage(@ModelAttribute("user") User user) {
         return "addUserPage";
     }
+
     @PostMapping("/createUser")
     public String createUser(@ModelAttribute("user") User user) {
         userService.add(user);
         return "redirect:/main";
     }
+
     @GetMapping("/updateUserPage")
     public String updateUserPage(@ModelAttribute("user") User user) {
         return "updateUserPage";
     }
+
     @PatchMapping("/updateUser")
     public String updateUser(@ModelAttribute("user") User user) {
         userService.update(user);
         return "redirect:/main";
     }
+
     @GetMapping("/deleteUserPage")
-    public String deleteUserPage() {
+    public String deleteUserPage(Model model) {
         return "deleteUserPage";
     }
+
     @DeleteMapping("/deleteUser")
-    public String deleteUser(@ModelAttribute("id") Long id) {
-        userService.delete(id);
+    public String deleteUser(Model model, Long id) {
+        try {
+            userService.delete(id);
+        } catch (NullPointerException e) {
+            model.addAttribute("message", "Пользователь не найден");
+            e.printStackTrace();
+            return "deleteUserPage";
+        }
         return "redirect:/main";
     }
 }
